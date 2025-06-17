@@ -7,6 +7,7 @@ cryptography==45.0.4
 defusedxml==0.7.1
 Django==5.2.3
 djangorestframework==3.16.0
+djangorestframework-nested==0.91
 djangorestframework_simplejwt==5.5.0
 djoser==2.3.1
 idna==3.10
