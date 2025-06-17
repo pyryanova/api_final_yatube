@@ -24,12 +24,15 @@ class Base64ImageField(serializers.ImageField):
 
 class PostSerializer(serializers.ModelSerializer):
     author = SlugRelatedField(slug_field='username', read_only=True)
+    # если это поле не указывать, сериализатор не поймет,
+    # как обрабатывать base64-изображения: "You must explicitly declare
+    # Base64ImageField in your serializer for it to work correctly"
     image = Base64ImageField(required=False, allow_null=True)
 
     class Meta:
         model = Post
         fields = ('id', 'text', 'author', 'image', 'group', 'pub_date')
-        read_only_fields = ('author', 'pub_date')
+        read_only_fields = ('pub_date',)
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -39,7 +42,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'author', 'post', 'text', 'created')
-        read_only_fields = ('author', 'post', 'created')
+        read_only_fields = ('created',)
 
 
 class GroupSerializer(serializers.ModelSerializer):

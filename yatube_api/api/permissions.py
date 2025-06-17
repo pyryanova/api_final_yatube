@@ -7,6 +7,5 @@ class IsAuthorOrReadOnly(IsAuthenticatedOrReadOnly):
         if request.method in SAFE_METHODS:
             return True
         return (
-            getattr(obj, 'author', None) == request.user
-            or getattr(obj, 'user', None) == request.user
+            obj.author == request.user
         )

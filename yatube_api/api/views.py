@@ -19,18 +19,11 @@ from .serializers import (
 from .viewsets import CreateGetListViewSet
 
 
-class ConditionalPagination(LimitOffsetPagination):
-    def paginate_queryset(self, queryset, request, view=None):
-        if 'limit' in request.query_params or 'offset' in request.query_params:
-            return super().paginate_queryset(queryset, request, view)
-        return None
-
-
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.select_related('author', 'group').all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
-    pagination_class = ConditionalPagination
+    pagination_class = LimitOffsetPagination
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -42,7 +35,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     lookup_field = 'pk'
 
     def get_post(self):
-        return get_object_or_404(Post, pk=self.kwargs['post_id'])
+        return get_object_or_404(Post, pk=self.kwargs['post_pk'])
 
     def get_queryset(self):
         return self.get_post().comments.select_related('author')
@@ -63,9 +56,7 @@ class FollowViewSet(CreateGetListViewSet):
     search_fields = ['following__username']
 
     def get_queryset(self):
-        return Follow.objects.select_related('following').filter(
-            user=self.request.user
-        )
+        return self.request.user.follows.select_related('following')
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
