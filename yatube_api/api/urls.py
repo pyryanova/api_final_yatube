@@ -6,13 +6,11 @@ from rest_framework_nested.routers import DefaultRouter, NestedDefaultRouter
 
 from api.views import CommentViewSet, FollowViewSet, GroupViewSet, PostViewSet
 
-# Основной роутер
+
 router = DefaultRouter()
 router.register(r'posts', PostViewSet, basename='post')
 router.register(r'groups', GroupViewSet, basename='group')
 router.register(r'follow', FollowViewSet, basename='follow')
-
-# Вложенный роутер для comments внутри posts
 posts_router = NestedDefaultRouter(router, r'posts', lookup='post')
 posts_router.register(r'comments', CommentViewSet, basename='post-comments')
 
