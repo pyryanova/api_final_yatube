@@ -11,7 +11,7 @@ router.register(r'posts', PostViewSet, basename='post')
 router.register(r'groups', GroupViewSet, basename='group')
 router.register(r'follow', FollowViewSet, basename='follow')
 
-# хотела сделать с NestedDefaultRouter, но у Практикума падают тесты, 
+# хотела сделать с NestedDefaultRouter, но у Практикума падают тесты,
 # а было красиво..
 
 # from rest_framework_nested.routers import NestedDefaultRouter
