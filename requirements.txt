@@ -25,7 +25,7 @@ python3-openid==3.2.0
 pytz==2025.2
 requests==2.26.0
 requests-oauthlib==2.0.0
-djangorestframework-nested==0.1.3
+drf-nested-routers==0.93.5
 social-auth-app-django==5.4.3
 social-auth-core==4.6.1
 sqlparse==0.5.3
